@@ -11,9 +11,10 @@ class DictionaryNode():
         self.key = key
         self.value = value
         self.hash_int = hash_int
+        self.collided = False
     
     def __repr__(self):
-        return ( self.key.__repr__() + ": " + self.value.__repr__())        
+        return ( self.key.__repr__() + ": " + self.value.__repr__())
 
 class Dictionary():
     """
@@ -61,11 +62,13 @@ class Dictionary():
                 key_hash_int = self.buckets[i].hash_int
                 entry = key_hash_int % proper_size
                 while new_buckets[entry]:
+                    new_buckets[entry].collided = True
                     if entry < proper_size - 2:
                         entry+=1
                     else:
                         entry = 0
                 new_buckets[entry] = self.buckets[i]
+                new_buckets[entry].collided = False
         self.buckets = new_buckets
         return
 
@@ -73,7 +76,6 @@ class Dictionary():
         s = ''
         for i in range(len(self.buckets)):
             if self.buckets[i]:
-                #s = s + str(i) + ": " + self.buckets[i].__repr__() + ',\n'
                 s = s + self.buckets[i].__repr__() + ', '
         if not s :
             return "{}"
@@ -84,12 +86,17 @@ class Dictionary():
         key_hash_int = self.hash_int(key)
         l = len(self.buckets)
         entry = key_hash_int % l
-        while self.buckets[entry].key != key:
-            if entry < l-2:
+        while self.buckets[entry]:
+            if self.buckets[entry].key == key:
+                return self.buckets[entry].value
+            elif not self.buckets[entry].collided:
+                raise KeyError(key)
+            elif entry < l-2:
                 entry+=1
             else:
                 entry = 0
-        return self.buckets[entry].value
+        raise KeyError(key)
+        
     
     def __setitem__(self, key, value):
             
@@ -101,6 +108,7 @@ class Dictionary():
         key_hash_int = self.hash_int(key)
         entry = key_hash_int % l
         while self.buckets[entry]:
+            self.buckets[entry].collided = True
             if entry < l-2:
                 entry+=1
             else:
@@ -109,6 +117,24 @@ class Dictionary():
             value=value,
             hash_int=key_hash_int)
     
+    def __delitem__(self, key):
+        key_hash_int = self.hash_int(key)
+        l = len(self.buckets)
+        entry = key_hash_int % l
+        while self.buckets[entry]:
+            if self.buckets[entry].key == key:
+                self.buckets[entry].key = None
+                self.buckets[entry].value = None
+                self.buckets[entry].hash_int = None
+                return
+            elif not self.buckets[entry].collided:
+                raise KeyError(key)
+            elif entry < l-2:
+                entry+=1
+            else:
+                entry = 0
+        raise KeyError(key)
+    
     def __len__(self):
         counter = 0
         for i in range(len(self.buckets)):
@@ -116,39 +142,5 @@ class Dictionary():
                 counter += 1
         return counter
 
-if __name__ == '__main__':
-    a = Dictionary()
-    a['A'] = 'Apple'
-    print(a)
-    a['B'] = 'Banana'
-    a['C'] = 'Cat'
-    a['D'] = 'Dog'
-    a['E'] = 'Egg'
-
-    a['F'] = 'Frog'
-    a['G'] = 'Goose'
-    a['H'] = 'Hi'
-    a['I'] = 'Ice'
-    a['J'] = 'Juice'
-    
-    a['K'] = 'King'
-    a['L'] = 'Lion'
-    a['A2'] = 'Adam'
-    a['B2'] = 'Bee'
-    a['C2'] = 'Cow'
-
-    a['D2'] = 'Duck'
-    a['E2'] = 'Elephant'
-    a['F2'] = 'Fun'
-    a['G2'] = 'Girl'
-    a['H2'] = 'Hello'
-    
-    a['I2'] = 'Ice-Cream'
-    a['J2'] = 'Jump'
-    a['K2'] = 'Kobe'
-    a['L2'] = 'Lakers'
-    
-    print(a)
-    print('J2',a['J2'])
         
     

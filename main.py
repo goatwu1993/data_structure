@@ -29,4 +29,9 @@ if __name__ == "__main__":
     a['K2'] = 'Kobe'
     a['L2'] = 'Lakers'
     print(a)
-    print('J2',a['J2'])
+    tmp = 'J2'
+
+    print(a)
+    print("a[",tmp.__repr__(),"]:",a[tmp])
+    del a[tmp]
+    print("a[",tmp.__repr__(),"]:",a[tmp])
