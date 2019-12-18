@@ -1,9 +1,11 @@
 # data_structure
 
-* A simple datastrucure implementation.
+- A simple datastrucure implementation.
 
-* Implement dictionary with hash table.
+- Implement dictionary with hash table.
 
-* Change History
-  * 2019/12/17
-    * Add delitem in dictioanry(open addressing). Add a collided flag for del => get handling.
+- Change History
+  - 2019/12/17
+    - Add delitem in dictioanry(open addressing). Add a collided flag for del => get handling.
+  - 2019/12/18
+    - Add stack & queue.
