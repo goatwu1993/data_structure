@@ -32,6 +32,6 @@ if __name__ == "__main__":
     tmp = 'J2'
 
     print(a)
-    print("a[",tmp.__repr__(),"]:",a[tmp])
+    print("a[", tmp.__repr__(), "]:", a[tmp])
     del a[tmp]
-    print("a[",tmp.__repr__(),"]:",a[tmp])
+    print("a[", tmp.__repr__(), "]:", a[tmp])

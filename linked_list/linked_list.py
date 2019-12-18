@@ -1,24 +1,26 @@
-
 class ListNode():
     """
     Node of a LinkedList.
     """
+
     def __init__(self, value):
         self.value = value
         self.next = None
         return
-    
+
     def __repr__(self):
         return self.value.__repr__()
+
 
 class LinkedList():
     """
     Single linked list
     """
+
     def __init__(self):
         self.head = None
         self.tail = None
-    
+
     def insert_node(self, n: ListNode):
         if not self.head:
             self.head = n
@@ -28,7 +30,7 @@ class LinkedList():
             self.tail.next = n
             self.tail = n
             return
-        
+
     def insert(self, value):
         x = ListNode(value=value)
         self.insert_node(x)
@@ -41,7 +43,7 @@ class LinkedList():
 
     def not_empty(self):
         return (not self.is_empty())
-    
+
     def __repr__(self):
         if not self.head:
             return '[]'
@@ -50,9 +52,9 @@ class LinkedList():
         while(x):
             s = s + x.__repr__() + ', '
             x = x.next
-        s = s[:-2]+ "]"
+        s = s[:-2] + "]"
         return s
-    
+
     def __len__(self):
         if not self.head:
             return 0
@@ -72,18 +74,18 @@ class LinkedList():
             if key >= l or (key < 0 and abs(key) > l):
                 errmsg = 'list index out of range'
                 raise IndexError(errmsg)
-            elif key >=0:
+            elif key >= 0:
                 real_key = key
             else:
                 real_key = l + key
             while (real_key > 0):
-                    x = x.next
-                    real_key -=1
-            return x.value    
+                x = x.next
+                real_key -= 1
+            return x.value
         except:
             errmsg = 'list index out of range'
             raise IndexError(errmsg)
-    
+
     def __setitem__(self, key: int, value):
         try:
             l = self.__len__()
@@ -92,17 +94,18 @@ class LinkedList():
             if key >= l or (key < 0 and abs(key) > l):
                 errmsg = 'list index out of range'
                 raise IndexError(errmsg)
-            elif key >=0:
+            elif key >= 0:
                 real_key = key
             else:
                 real_key = l + key
             while (real_key > 0):
                 x = x.next
-                real_key -=1
-            x.value = value   
+                real_key -= 1
+            x.value = value
         except:
             errmsg = 'list index out of range'
             raise IndexError(errmsg)
+
 
 if __name__ == "__main__":
     a = LinkedList()
@@ -112,4 +115,3 @@ if __name__ == "__main__":
     a.insert('Cat')
     print("--------------")
     print(a)
-    
