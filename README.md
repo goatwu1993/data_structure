@@ -6,6 +6,8 @@
 
 - Change History
   - 2019/12/17
-    - Add delitem in dictioanry(open addressing). Add a collided flag for del => get handling.
+    - Add delitem in dictioanry(open addressing).
   - 2019/12/18
     - Add stack & queue.
+  - 2019/12/19
+    - Add Heap (class)
