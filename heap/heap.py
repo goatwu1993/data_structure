@@ -21,7 +21,6 @@ class Heap():
                 return node1.value < node2.value
             else:
                 return node1.value > node2.value
-                
         if not n:
             return
         self.heapify(n.left)
@@ -65,16 +64,11 @@ class Heap():
         def len_node(n: HeapNode):
             if not n:
                 return 0
-            else:
-                ll = len_node(n.left)
-                lr = len_node(n.right)
-                if lr > ll:
-                    raise IndexError('Heap Broken')
-                return 1 + ll + lr
-        if self.root:
-            return len_node(self.root)
-        else:
-            return 0
+            ll, lr = len_node(n.left), len_node(n.right)
+            if lr > ll:
+                raise IndexError('Heap Broken')
+            return 1 + ll + lr
+        return len_node(self.root)
 
 
 if __name__ == "__main__":
