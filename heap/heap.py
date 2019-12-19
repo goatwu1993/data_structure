@@ -26,36 +26,30 @@ class Heap():
         self.heapify(n.left)
         self.heapify(n.right)
         if n.left and is_valid(n.left, n) and (not n.right or is_valid(n.left, n.right)):
-            tmp = n.value
-            n.value = n.left.value
-            n.left.value = tmp
+            n.value, n.left.value = n.left.value, n.value
             return
         elif n.right and is_valid(n.right, n) and (not n.left or is_valid(n.right, n.left)):
-            tmp = n.value
-            n.value = n.right.value
-            n.right.value = tmp
+            n.value, n.right.value = n.right.value, n.value
             return
 
     def insert(self, value):
         l = "{0:b}".format(self.__len__()+1)
         if l == '1':
             self.root = HeapNode(value)
+            return self
+        pos = self.root
+        path = l[1:-1]
+        final = l[-1]
+        # traverse through heap
+        for i in path:
+            pos = (pos.left if i == '0' else pos.right)
+        # final assign
+        if final == '0':
+            pos.left = HeapNode(value)
         else:
-            tmp = self.root
-            path = l[1:-1]
-            final = l[-1]
-            # traverse through heap
-            for i in path:
-                if i == '0':
-                    tmp = tmp.left
-                else:
-                    tmp = tmp.right
-            # final assign
-            if final == '0':
-                tmp.left = HeapNode(value)
-            else:
-                tmp.right = HeapNode(value)
-            self.heapify(self.root)
+            pos.right = HeapNode(value)
+        self.heapify(self.root)
+        return self
 
     def __repr__(self):
         return self.root.__repr__()
