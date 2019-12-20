@@ -11,3 +11,5 @@
     - Add stack & queue.
   - 2019/12/19
     - Add Heap (class)
+  - 2019/12/20
+    - Heap import operator

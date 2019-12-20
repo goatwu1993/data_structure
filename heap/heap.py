@@ -1,3 +1,6 @@
+import operator
+    
+
 class HeapNode():
     def __init__(self, value):
         self.value = value
@@ -9,45 +12,54 @@ class HeapNode():
 
 
 class Heap():
-    def __init__(self, type: str = 'Max'):
-        if not (type == 'Min') and not (type == 'Max'):
-            raise TypeError('type should be either Min or Max')
-        self.type = type
+    def __init__(self, compare=operator.lt):
+        if not (compare == operator.lt) and not (compare == operator.gt):
+            raise TypeError('type should be either operator.lt or operator.gt')
         self.root = None
+        self.compare = compare
 
     def heapify(self, n: HeapNode):
-        def is_valid(node1: HeapNode, node2: HeapNode):
-            if self.type == 'Min':
-                return node1.value < node2.value
-            else:
-                return node1.value > node2.value
         if not n:
             return
+        compare = self.compare
         self.heapify(n.left)
         self.heapify(n.right)
-        if n.left and is_valid(n.left, n) and (not n.right or is_valid(n.left, n.right)):
+        if n.left and compare(n.left.value, n.value) and (not n.right or compare(n.left.value, n.right.value)):
             n.value, n.left.value = n.left.value, n.value
-        elif n.right and is_valid(n.right, n) and (not n.left or is_valid(n.right, n.left)):
+        elif n.right and compare(n.right.value, n.value) and (not n.left or compare(n.right.value, n.left.value)):
             n.value, n.right.value = n.right.value, n.value
 
     def insert(self, value):
-        if not self.root:
-            self.root = HeapNode(value)
-            return self
-        pos = self.root
-        l = "{0:b}".format(self.__len__()+1)
-        path = l[1:-1]
-        final = l[-1]
-        # traverse through heap
-        for i in path:
-            pos = (pos.left if i == '0' else pos.right)
-        # assign
-        if final == '0':
+        def insert_not_full(n: HeapNode, d: int, v):
+            if not d:
+                self.root = HeapNode(value)
+                return True
+            if d == 1:
+                return False
+            if d == 2 and not n.left:
+                n.left = HeapNode(v)
+                return True
+            if d == 2 and not n.right:
+                n.right = HeapNode(v)
+                return True
+            return (insert_not_full(n.left, d-1, v) or insert_not_full(n.right, d-1, v))
+
+        if not insert_not_full(self.root, self.depth(), value):
+            # The heap is currently full (all branch have same depth)
+            pos = self.root
+            while pos.left:
+                pos = pos.left
             pos.left = HeapNode(value)
-        else:
-            pos.right = HeapNode(value)
         self.heapify(self.root)
         return self
+
+    def depth(self):
+        if not self.root:
+            return 0
+        rs, pos = 1, self.root
+        while pos.left:
+            rs, pos = rs+1, pos.left
+        return rs
 
     def __repr__(self):
         return self.root.__repr__()
@@ -64,9 +76,9 @@ class Heap():
 
 
 if __name__ == "__main__":
-    a = Heap()
-    for i in range(0, 10, 1):
-        a.insert(i)
+    h = Heap(compare=operator.gt)
+    for i in range(0, 20, 1):
+        h.insert(i)
 
     for i in range(0, 10, 1):
-        a.insert(i)
+        h.insert(i)
