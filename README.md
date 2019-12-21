@@ -13,3 +13,5 @@
     - Add Heap (class)
   - 2019/12/20
     - Heap import operator
+  - 2019/12/21
+    - Add Complete Binary Tree

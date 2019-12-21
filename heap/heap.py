@@ -1,11 +1,12 @@
 import operator
-    
+
 
 class HeapNode():
     def __init__(self, value):
-        self.value = value
         self.left = None
         self.right = None
+        self.value = value
+        self.left = None
 
     def __repr__(self):
         return "HeapNode( "+self.value.__repr__()+" )"
@@ -16,6 +17,7 @@ class Heap():
         if not (compare == operator.lt) and not (compare == operator.gt):
             raise TypeError('type should be either operator.lt or operator.gt')
         self.root = None
+        self.length = 0
         self.compare = compare
 
     def heapify(self, n: HeapNode):
@@ -30,52 +32,32 @@ class Heap():
             n.value, n.right.value = n.right.value, n.value
 
     def insert(self, value):
-        def insert_not_full(n: HeapNode, d: int, v):
-            if not d:
-                self.root = HeapNode(value)
-                return True
-            if d == 1:
-                return False
-            if d == 2 and not n.left:
-                n.left = HeapNode(v)
-                return True
-            if d == 2 and not n.right:
-                n.right = HeapNode(v)
-                return True
-            return (insert_not_full(n.left, d-1, v) or insert_not_full(n.right, d-1, v))
-
-        if not insert_not_full(self.root, self.depth(), value):
-            # The heap is currently full (all branch have same depth)
-            pos = self.root
-            while pos.left:
-                pos = pos.left
+        if not self.length:
+            self.root = HeapNode(value)
+            self.length += 1
+        l = bin(self.length + 1)
+        path = bin(self.length + 1)[3:-1]
+        final = bin(self.length + 1)[-1]
+        pos = self.root
+        position = self.root
+        for i in path:
+            pos = pos.left if i == '0' else pos.right
+        if final == '0':
             pos.left = HeapNode(value)
+        else:
+            pos.right = HeapNode(value)
+        self.length += 1
         self.heapify(self.root)
         return self
-
-    def depth(self):
-        if not self.root:
-            return 0
-        rs, pos = 1, self.root
-        while pos.left:
-            rs, pos = rs+1, pos.left
-        return rs
 
     def __repr__(self):
         return self.root.__repr__()
 
     def __len__(self):
-        def len_node(n: HeapNode):
-            if not n:
-                return 0
-            ll, lr = len_node(n.left), len_node(n.right)
-            if lr > ll:
-                raise IndexError('Heap Broken')
-            return 1 + ll + lr
-        return len_node(self.root)
+        return self.length
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     h = Heap(compare=operator.gt)
     for i in range(0, 20, 1):
         h.insert(i)
