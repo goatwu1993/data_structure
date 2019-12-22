@@ -1,7 +1,6 @@
-from hash_table.hash_table import HashTable
+from hash_table import HashTable
 from hashlib import md5
-from linked_list.linked_list import LinkedList, ListNode
-import struct
+from linked_list import LinkedList, ListNode
 
 
 class DictionaryNode():

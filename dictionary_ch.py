@@ -1,5 +1,5 @@
-from hash_table.hash_table import HashTable
-from linked_list.linked_list import LinkedList, ListNode
+from hash_table import HashTable
+from linked_list import LinkedList, ListNode
 
 
 class DictionaryNode(ListNode):

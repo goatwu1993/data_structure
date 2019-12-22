@@ -1,7 +1,9 @@
-from linked_list.linked_list import LinkedList
-from dictionary_openadressing.dictionary import Dictionary
-from heap.heap import Heap
+#from .linked_list.linked_list import LinkedList
 import operator
+from heap import Heap
+#from .dictionary_openadressing.dictionary import Dictionary
+import sys
+
 
 if __name__ == '__main__':
     h = Heap(compare=operator.gt)

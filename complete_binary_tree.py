@@ -13,11 +13,9 @@ class CompleteBinaryTree():
         if not self.length:
             self.root = CompleteBinaryTreeNode()
             self.length += 1
-        l = bin(self.length + 1)
         path = bin(self.length + 1)[3:-1]
         final = bin(self.length + 1)[-1]
         pos = self.root
-        position = self.root
         for i in path:
             pos = pos.left if i == '0' else pos.right
         if final == '0':
@@ -26,3 +24,9 @@ class CompleteBinaryTree():
             pos.right = CompleteBinaryTreeNode()
         self.length += 1
         return
+
+    def __repr__(self):
+        return self.root.__repr__()
+
+    def __len__(self):
+        return self.length

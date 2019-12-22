@@ -105,13 +105,3 @@ class LinkedList():
         except:
             errmsg = 'list index out of range'
             raise IndexError(errmsg)
-
-
-if __name__ == "__main__":
-    a = LinkedList()
-    print(a)
-    a.insert('Apple')
-    a.insert('Banana')
-    a.insert('Cat')
-    print("--------------")
-    print(a)

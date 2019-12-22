@@ -1,7 +1,8 @@
 import operator
+from complete_binary_tree import CompleteBinaryTree, CompleteBinaryTreeNode
 
 
-class HeapNode():
+class HeapNode(CompleteBinaryTreeNode):
     def __init__(self, value):
         self.left = None
         self.right = None
@@ -12,7 +13,7 @@ class HeapNode():
         return "HeapNode( "+self.value.__repr__()+" )"
 
 
-class Heap():
+class Heap(CompleteBinaryTree):
     def __init__(self, compare=operator.lt):
         if not (compare == operator.lt) and not (compare == operator.gt):
             raise TypeError('type should be either operator.lt or operator.gt')
@@ -35,11 +36,9 @@ class Heap():
         if not self.length:
             self.root = HeapNode(value)
             self.length += 1
-        l = bin(self.length + 1)
         path = bin(self.length + 1)[3:-1]
         final = bin(self.length + 1)[-1]
         pos = self.root
-        position = self.root
         for i in path:
             pos = pos.left if i == '0' else pos.right
         if final == '0':
@@ -49,12 +48,6 @@ class Heap():
         self.length += 1
         self.heapify(self.root)
         return self
-
-    def __repr__(self):
-        return self.root.__repr__()
-
-    def __len__(self):
-        return self.length
 
 
 if __name__ == '__main__':
