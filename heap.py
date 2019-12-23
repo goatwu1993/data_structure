@@ -17,8 +17,7 @@ class Heap(CompleteBinaryTree):
     def __init__(self, compare=operator.lt):
         if not (compare == operator.lt) and not (compare == operator.gt):
             raise TypeError('type should be either operator.lt or operator.gt')
-        self.root = None
-        self.length = 0
+        CompleteBinaryTree.__init__(self)
         self.compare = compare
 
     def heapify(self, n: HeapNode):
@@ -33,27 +32,29 @@ class Heap(CompleteBinaryTree):
             n.value, n.right.value = n.right.value, n.value
 
     def insert(self, value):
-        if not self.length:
-            self.root = HeapNode(value)
-            self.length += 1
-        path = bin(self.length + 1)[3:-1]
-        final = bin(self.length + 1)[-1]
-        pos = self.root
-        for i in path:
-            pos = pos.left if i == '0' else pos.right
-        if final == '0':
-            pos.left = HeapNode(value)
-        else:
-            pos.right = HeapNode(value)
-        self.length += 1
+        CompleteBinaryTree.insert(self, HeapNode(value))
         self.heapify(self.root)
         return self
+
+    def pop(self):
+        if self.length <= 1:
+            return super().pop().value
+        value_root = self.root.value
+        value_tail = super().pop().value
+        if self.root:
+            self.root.value = value_tail
+        self.heapify(self.root)
+        return value_root
 
 
 if __name__ == '__main__':
     h = Heap(compare=operator.gt)
-    for i in range(0, 20, 1):
+    for i in range(0, 7, 1):
         h.insert(i)
 
-    for i in range(0, 10, 1):
-        h.insert(i)
+    h.preorder(h.root, print)
+    #h.inorder(h.root, print)
+    #h.postorder(h.root, print)
+
+    for i in range(0, 70, 1):
+        print(h.pop())
