@@ -16,4 +16,6 @@
   - 2019/12/21
     - Add Complete Binary Tree
   - 2019/12/22
-    - Move all file out, add '__init__.py'
+    - Move all file out, add '**init**.py'
+  - 2019/12/26
+    - Remove dictionary (chaining)
