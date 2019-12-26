@@ -16,6 +16,8 @@
   - 2019/12/21
     - Add Complete Binary Tree
   - 2019/12/22
-    - Move all file out, add '**init**.py'
+    - Move all file out.
   - 2019/12/26
     - Remove dictionary (chaining)
+  - 2019/12/27
+    - Dictionary use bit wise compare instead of mod.

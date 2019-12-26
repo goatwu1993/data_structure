@@ -19,5 +19,16 @@ class DictionaryTest(unittest.TestCase):
         self.assertEqual(D1['array'], D_test['array'])
         self.assertEqual(D1['s'], D_test['s'])
 
+    def test_2(self):
+        D1 = {}
+        D_test = Dictionary()
+        n = 10000
+        for j in range(n):
+            D1[j] = D_test[j] = j*j
+            D1[str(j)] = D_test[str(j)] = bin(j)
+        for j in range(n):
+            self.assertEqual(D1[j], D_test[j])
+            self.assertEqual(D1[str(j)], D_test[str(j)])
+
     # def test_useful(self):
     #   self.assertDictEqual(self.D1, self.D2)
