@@ -35,24 +35,23 @@ class Dictionary():
 
     def resize(self):
         """
-        Should change the size if load_factor > 2/3 or load_factor < 2/3
-        Should do nothing if load_factor between 1/3 and 2/3
+        Change size if 
+        1. load_factor > 2/3 or
+        2. load_factor < 2/3
+        return otherwise.
         """
-        def proper_size(n, k):
+        def proper_size(n):
             pro_size = 8 if n <= 2 else 2**(int(n * 1.5)).bit_length()
             return pro_size
 
-        used = self.used_entry
         old_size = len(self.buckets)
-        new_size = proper_size(used, old_size)
+        new_size = proper_size(self.used_entry)
         if old_size == new_size:
             return
         new_buckets = [None for x in range(0, new_size)]
         for i in range(old_size):
             if self.buckets[i] and (self.buckets[i].key is not None):
-                key_me_hash = self.buckets[i].me_hash
-                # & for bitwise operation (bitmask)
-                entry = key_me_hash & (new_size-1)
+                entry = (self.buckets[i].me_hash) & (new_size-1)
                 while new_buckets[entry]:
                     new_buckets[entry].collided = True
                     entry = entry+1 if entry < (new_size-2) else 0
@@ -65,12 +64,11 @@ class Dictionary():
         for i in range(len(self.buckets)):
             if self.buckets[i]:
                 s = s + self.buckets[i].__repr__() + ', '
-        return {} if not s else "{{{0}}}".format(s[:-3])
+        return "{}" if not s else "{{{0}}}".format(s[:-3])
 
     def __getitem__(self, key):
-        key_me_hash = self.me_hash(key)
         l = len(self.buckets)
-        entry = key_me_hash & (l-1)
+        entry = self.me_hash(key) & (l-1)
         while self.buckets[entry]:
             if self.buckets[entry].key == key:
                 return self.buckets[entry].value
@@ -82,7 +80,6 @@ class Dictionary():
     def __setitem__(self, key, value):
         self.used_entry += 1
         self.resize()
-
         l = len(self.buckets)
         key_me_hash = self.me_hash(key)
         entry = key_me_hash & (l-1)

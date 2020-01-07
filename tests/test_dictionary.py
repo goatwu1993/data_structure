@@ -1,5 +1,5 @@
 import unittest
-from dictionary import Dictionary
+from data_structure_sample.data_structures.dictionary import Dictionary
 
 
 class DictionaryTest(unittest.TestCase):
@@ -29,6 +29,3 @@ class DictionaryTest(unittest.TestCase):
         for j in range(n):
             self.assertEqual(D1[j], D_test[j])
             self.assertEqual(D1[str(j)], D_test[str(j)])
-
-    # def test_useful(self):
-    #   self.assertDictEqual(self.D1, self.D2)

@@ -1,5 +1,5 @@
 import operator
-from complete_binary_tree import CompleteBinaryTree, CompleteBinaryTreeNode
+from data_structure_sample.templates.complete_binary_tree import CompleteBinaryTree, CompleteBinaryTreeNode
 
 
 class HeapNode(CompleteBinaryTreeNode):
@@ -7,7 +7,6 @@ class HeapNode(CompleteBinaryTreeNode):
         self.left = None
         self.right = None
         self.value = value
-        self.left = None
 
     def __repr__(self):
         return "HeapNode( "+self.value.__repr__()+" )"
