@@ -29,11 +29,9 @@ class Dictionary():
 
     def me_hash(self, key):
         """
-        I dont know how to use byte in Python
-        Store the hash sum as int instead
+        hash of key
         """
-        return siphash24(b'0123456789ABCDEF',
-                         (str(key).encode('utf-8'))).hash()
+        return siphash24(b'0123456789ABCDEF', (str(key).encode('utf-8'))).hash()
 
     def resize(self):
         """
@@ -61,7 +59,6 @@ class Dictionary():
                 new_buckets[entry] = self.buckets[i]
                 new_buckets[entry].collided = False
         self.buckets = new_buckets
-        return
 
     def __repr__(self):
         s = ''
