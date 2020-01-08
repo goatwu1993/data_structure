@@ -2,6 +2,8 @@
 
 - Change History
   - 2020-01-08
+    - Remove heap.
+  - 2020-01-08
     - Change directory structure
     - Add heap.
   - 2019-12-27
